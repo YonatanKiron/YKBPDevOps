@@ -1,0 +1,4 @@
+---
+
+service_dir: '/app'
+log_file: '/var/log/img-panda.log'
