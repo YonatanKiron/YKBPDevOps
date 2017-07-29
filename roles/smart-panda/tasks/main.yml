@@ -1,0 +1,14 @@
+---
+- name: create app directory
+  file: path="{{ service_dir }}" state=directory mode=0755
+
+- name: copy smart-panda service
+  copy: src=smart-panda dest=/app mode=0755
+  register: service
+
+- name: copy smart-panda upstart service
+  template: src=smart-panda.conf dest=/etc/init/smart-panda.conf mode=0644
+
+- name: restart smart-panda service
+  service: name=smart-panda state=restarted
+  when: service.changed
