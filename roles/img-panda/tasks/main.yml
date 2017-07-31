@@ -1,0 +1,14 @@
+---
+- name: create app directory
+  file: path="{{ service_dir }}" state=directory mode=0755
+
+- name: copy img-panda service
+  copy: src=img-panda dest=/app mode=0755
+  register: service
+
+- name: copy img-panda upstart service
+  template: src=img-panda.conf dest=/etc/init/img-panda.conf mode=0644
+
+- name: restart img-panda service
+  service: name=img-panda state=restarted
+  when: service.changed
